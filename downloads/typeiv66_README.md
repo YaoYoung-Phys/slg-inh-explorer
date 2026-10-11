@@ -1,83 +1,28 @@
-# 66 个 Type-IV cSLG：Néel 方向、SOC 磁层群与层分辨 INH
+# Type-IV: source and calculation notes
 
-本结果按 Du、Zeng、Zhao，PRB 113, 214455 (2026)，DOI 10.1103/g471-xrkl，补充材料 Table S6 第 84–95 页的顺序排列。
+Source: Supplemental Material, Table S6, pp. 84–95.
+Coverage: 66 groups; 510 direction branches; 56 coupled branches.
 
-## 覆盖范围
+Recorded corrections:
+- 31.5.192, p. 87, operation 04: s(Mx) = -1 is treated as +1, as required by the other operation signs and the printed SLG symbol.
+- 39.5.260, p. 89, operation 08: the Mx translation is treated as (0,1/2,0), rather than (1/2,0,0), consistent with P C2x and the parent entry.
+- 78.5.514, p. 94: the final spin sign in the symbol is treated as +1 for the twofold operation, consistent with operations 10–12 and closure. The original label is retained in the archive.
+- The MLG lookup catalog also treats 77.1.505 operation 09 as s = +1, consistent with the FM/FIM entry.
 
-- 66 个自旋层群，510 个方向分支。
-- 8 个群各有 3 类分支，48 个群各有 7 类，10 个六方群各有 15 类。
-- 主表采用 AX_[uvw]、PL_(hkl)、GEN；前三列按 cSLG 合并。
-- SLG 操作逐行列出；MLG 点操作直接列出，保持单行。操作列省略平移并合并重复项。
-- 表中完整 MLG 编号仍利用完整仿射操作进行识别。每个分支均提供保持层法向的基矢/原点变换作为核验依据。
-- 510 行是固定坐标下的方向分层，不是 510 种不同的 MLG。通过晶体对称性关联的不同取向保留，以免改变张量指标的含义。
+The default example 36.3.223 uses C2y, Mx, and Mz in source coordinates. For n parallel to z, chi_xyy is forbidden in each layer and chi_yxx is hidden.
 
-## 文件
+Conventions
+-----------
+Fixed structure and collinear magnetic order; two physical layers on opposite sides of z = 0. AX_[uvw] denotes a special axis. PL_(hkl) excludes all listed special axes in that plane; GEN excludes every listed special axis and plane. A single GEN branch covers all directions.
 
-- `TypeIV_66_cSLG_Neel_MLG_INH.pdf`：完整表格、说明及耦合约束附表。
-- `TypeIV_66_cSLG_Neel_MLG_INH.tex`：独立可编译 LaTeX 源文件，A3 横版。
-- `TypeIV_66_results.json`：全部分支的操作矩阵、响应符号、完整允许空间、群编号及仿射变换。
-- `source_typeiv_66.json`、`source_catalog_448.json`：从原 PDF 提取的原始内容，保留原文不一致项。
-- `mlg_lookup_index.json`：用于识别候选群的参考索引。
-- `calculation_results.json`：程序中间结果，含完成核验后的群编号。
-- `validation_summary.json`：核验摘要。
-- Python 文件：提取、计算、群识别、仿射核验、符号排版和报告生成程序。
+Cartesian tensor indices use z normal to the layer. Rectangular settings have x parallel to a and y parallel to b. Hexagonal/trigonal settings use a=(1,0,0), b=(-1/2,sqrt(3)/2,0); crystallographic [010] is not Cartesian y.
 
-## 坐标与符号
+The time-reversal-odd Hall convention is chi_abc = -chi_bac. A^l = chi_xyy^l and B^l = chi_yxx^l, with chi_xyx^l = -B^l and chi_yxy^l = -A^l. The rows of each basis matrix are (A^t,B^t,A^b,B^b); columns are independent basis vectors. The same real parameters multiply these columns in all four equations.
 
-取 z 为层法向。矩形设置使用 x∥a、y∥b。六方设置使用 a=(1,0,0)、b=(-1/2,√3/2,0)，张量的笛卡尔 y 沿 z×a。因此六方 [010] 不等于笛卡尔 y。
+Marks: + means equal allowed layer contributions; - means opposite allowed layer contributions (hidden); 0 means forbidden in each layer; v means no fixed same-component interlayer ratio. An asterisk identifies additional cross-component constraints. Allowed values may vanish microscopically.
 
-六方操作以明确的晶向表示：C2,[uvw] 为绕该晶向的二重旋转，M_[uvw] 的法向平行该晶向。原文 {x,y,xy} 与 {1,2,3} 两组三元集合分别按 {[100],[010],[110]} 和 {[1 −1 0],[120],[210]} 展开；不依赖原文数字下标逐一对应的未说明约定。
+Displayed operations omit translations. The original archives retain source operations, calculations, affine identification witnesses, and validation records. Coordinates satisfy x_source = C x_reference + origin; operation displays and tensor indices remain in source coordinates.
 
-PL_(hkl) 表示相应平面内排除所有特殊轴的方向；GEN 排除全部列出的特殊轴和平面。各分支的样本方向只用于求对应稳定子群，不限制该分支仅含一个方向。
+The source paper supplies the spin layer groups and operations. The direction branches, SOC group assignments, and response constraints are derived calculations. Recorded corrections are computational consistency treatments, not an author-issued erratum. The original archives, including their original documentation language, are preserved byte-for-byte for provenance.
 
-A^ℓ=χ_xyy^ℓ，B^ℓ=χ_yxx^ℓ，采用 χ_abc=−χ_bac 的二维 Hall 张量约定。完整二维张量还满足 χ_xyx=−B、χ_yxy=−A，其他分量为零。
-
-- `+`：同一分量 χ^t=χ^b，局域允许。
-- `-`：同一分量 χ^t=−χ^b，局域允许，即 hidden。
-- `0`：χ^t=χ^b=0，每层均禁止。
-- `v`：同一分量之间无强制比例关系；不排除跨分量关系。
-
-56 个带星号方向还有 A、B 之间的耦合约束，附表给出其完整允许空间。对这些方向，不能只凭两列符号判断两个分量彼此独立。JSON 的 `basis` 使用行顺序 (A^t,B^t,A^b,B^b)，每列为一个独立基向量，系数任意；`dimension` 是该允许空间维数。
-
-## 原文不一致项与处理
-
-1. **31.5.192，第 87 页，操作 04**：原文 Mx 的自旋标记写为 −1。由于 C2y 与 Mz 的标记均为 −1，其乘积 Mx 必须为 +1；群符号亦为 +1 m。计算采用 +1。
-2. **39.5.260，第 89 页，操作 08**：原文 Mx 平移写为 (1/2,0,0)，与 P·C2x 不闭合。采用 (0,1/2,0)，也与 39.1.256 母群一致。该处不影响点操作或响应约束，只影响完整 MLG 核验。
-3. **78.5.514，第 94 页，群符号**：原文末尾写 −1 2，但操作 10–12 的标记均为 +1，且完整操作集合闭合。计算与排版采用 p^{-1}bar6^{-1}m^{1}2，原始符号仍保留在 raw JSON。
-4. **77.1.505，Table S3 第 32 页，操作 09**：用于查表的 FM 群中 My 被孤立地写为 −1；按 FM 群及其余操作采用 +1。此项属于参考目录修正，不属于 66 个目标条目。
-
-这些处理均在 PDF 首页披露，没有改写附件 PDF。78.5.514 的修正是按其操作表作出的明确一致性选择，不应误称为作者已发布的勘误。
-
-## 核验
-
-- 66/66 个目标群通过自旋点群及完整仿射群闭合性检查。
-- 510/510 个方向分支的 SOC 点群闭合。
-- 510/510 个 MLG 编号具有与参考操作表匹配的仿射变换。
-- 510/510 个允许张量空间通过直接三阶张量变换验证。
-- 1902 个轴、平面和一般方向的样本检验未发现遗漏的稳定子群。
-- c^{-1}m^{1}2^{-1}a 的七分支结果与前述示例一致。
-
-形式：固定结构与共线磁序，旋转共同磁矩轴；两物理层分处 z=0 两侧。方向可允许并不代表其为磁各向异性能量极小值，也不保证允许的响应实际非零。
-
-## 复算
-
-需要 Python、NumPy、SymPy 和 spglib；PDF 编译还需要 TeX Live 的 pdflatex。
-
-```bash
-python -m pip install -r requirements.txt
-python calculate.py
-python verify_affine.py
-python build_report.py
-python validate_results.py
-pdflatex -interaction=nonstopmode -halt-on-error TypeIV_66_cSLG_Neel_MLG_INH.tex
-pdflatex -interaction=nonstopmode -halt-on-error TypeIV_66_cSLG_Neel_MLG_INH.tex
-```
-
-原始提取数据与查表索引已提供。如需从附件重新提取或重新建立索引：
-
-```bash
-python extract_source.py /path/to/Supplemental_Materials_of_magnetic_stacking_theory.pdf
-python identify_mlg.py
-```
-
-参考索引没有要求全部 448 条原文记录均能直接映射到三维磁空间群。计算仅将其作为候选筛选工具，最终 510 个结果均以保持层法向的完整仿射操作匹配核验，不以三维编号单独代替 MLG 编号。
+Source: J.-X. Du, S. Zeng and Y.-J. Zhao, Stacking theory for bilayer two-dimensional magnets, Phys. Rev. B 113, 214455 (2026), DOI: 10.1103/g471-xrkl.

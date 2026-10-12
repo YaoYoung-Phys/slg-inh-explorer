@@ -8,20 +8,17 @@ Open index.html directly. No installation, backend, or internet connection is re
 
 ## GitHub Pages deployment
 
-Upload index.html, assets/, data/, downloads/, and .nojekyll to the root of the main branch. In Settings → Pages, select Deploy from a branch → main → /(root).
+Upload index.html, assets/, data/, and .nojekyll to the root of the main branch. In Settings → Pages, select Deploy from a branch → main → /(root).
 
 Official guide: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-
-The website ZIP cannot include itself. To enable the website-package download button on your own deployment, also put the original ZIP at downloads/slg-inh-explorer-github-pages.zip.
 
 ## Files
 
 - assets/core.js: mathematical formatting and direction matching using full source-operation identities.
 - assets/app.js and assets/style.css: interface and styling.
 - data/database.js and data/database.json: equivalent forms of the unified dataset, including provenance, source archive hashes, English source notes, and original validation summaries.
-- downloads/: complete tables, original reproducibility archives, and English source notes.
 
-The original data-and-code archives remain unchanged, including their original-language documentation, to preserve their provenance and checksums.
+The interface has no download or export controls. Original report archives are excluded from this published directory. The query dataset remains accessible to the browser.
 
 ## Scope and checks
 
